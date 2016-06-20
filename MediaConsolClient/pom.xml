@@ -3,6 +3,52 @@
   <groupId>by.sjc2016</groupId>
   <artifactId>MediaConsolClient</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  <build>
+      <plugins>
+      <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>2.3.2</version>
+            <configuration>
+                <source>1.6</source>
+                <target>1.6</target>
+            </configuration>
+        </plugin>
+       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifest>
+             <addClasspath>true</addClasspath>
+    <mainClass>application.command.CommandProcessor</mainClass>
+    <packageName>application.command</packageName>
+    <addClasspath>true</addClasspath>
+    <classpathPrefix>lib/</classpathPrefix>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
+      <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <version>2.4</version>
+            <executions>
+                <execution>
+                    <id>copy-dependencies</id>
+                    <phase>package</phase>
+                    <goals>
+                        <goal>copy-dependencies</goal>
+                    </goals>
+                    <configuration>
+                        <includeScope>compile</includeScope>
+                        <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
+      </plugins>
+    </build>
  
 <properties>
 		<jdk.version>1.8</jdk.version>
@@ -14,6 +60,7 @@
 		<slf4j.version>1.7.6</slf4j.version>
 		<hibernate.version>4.2.21.Final</hibernate.version>
 		<dbcp.version>1.4</dbcp.version>
+		<apache.httpcomponents.version>3.0.0</apache.httpcomponents.version>
 	</properties>
 	
 	<dependencies>
@@ -227,5 +274,29 @@
 			<artifactId>cxf-rt-transports-http-hc</artifactId>
 			<version>3.1.4</version>
 		</dependency>
+		
+		     <dependency>
+            <groupId>commons-httpclient</groupId>
+            <artifactId>commons-httpclient</artifactId>
+            <version>3.1</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+    <groupId>org.apache.httpcomponents</groupId>
+    <artifactId>httpclient</artifactId>
+    <version>4.5.2</version>
+</dependency>
+<dependency>
+    <groupId>org.apache.httpcomponents</groupId>
+    <artifactId>jakarta-httpcore</artifactId>
+    <version>4.0-alpha4</version>
+</dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpmime</artifactId>
+            <version>4.3.1</version>
+            <scope>compile</scope>
+        </dependency>
+ 
 	</dependencies>
 </project>

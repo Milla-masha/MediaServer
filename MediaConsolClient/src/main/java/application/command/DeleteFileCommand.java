@@ -1,10 +1,17 @@
 package application.command;
 
+import application.service.Factory;
+
 public class DeleteFileCommand implements Command {
 
 	public boolean execute(Context context, String... args) {
-		// TODO Auto-generated method stub
-		return false;
+		  if (args == null) {
+	            System.out.println("Please, input name file!");
+	        } else {
+	        	context.addAllDirectory(args[0]);
+	        	Factory.getInstance().getEmployeeDAO().deleteFile(context.tofile());
+	        }
+	        return true;
 	}
 
 	public void printHelp() {

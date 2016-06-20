@@ -1,13 +1,14 @@
 package application.command;
 
 
-import java.util.List;
+
+import java.io.IOException;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Scanner;
 import java.util.TreeMap;
-
 import application.constant.Constant;
-import application.entity.JavaIOFile;
+
 
 public class CommandProcessor {
 
@@ -16,8 +17,9 @@ public class CommandProcessor {
     private String consoleEncoding;
 
 	private Scanner scanner;
- 
-    public Map<String, Command> getCommands() {
+	
+
+	public Map<String, Command> getCommands() {
 		return commands;
 	}
 
@@ -32,15 +34,25 @@ public class CommandProcessor {
         commands.put(cmd.getName(), cmd);
         cmd=new CreateFileCommand();
         commands.put(cmd.getName(), cmd);
+        cmd=new DeleteFileCommand();
+        commands.put(cmd.getName(), cmd);
+        cmd=new MoveFileCommand();
+        commands.put(cmd.getName(), cmd);
+        cmd=new DownloadFileCommand();
+        commands.put(cmd.getName(), cmd);
+        cmd=new UploadFileCommand();
+        commands.put(cmd.getName(), cmd);
+        cmd=new LikedCommand();
+        commands.put(cmd.getName(), cmd);
         this.consoleEncoding = consoleEncoding;
     }
  
     public void execute() {
-        Context c = new Context();
+    	Context c = Context.getInstance();
         boolean result = true;
         scanner = new Scanner(System.in, consoleEncoding);
         do {
-            System.out.print("> ");
+            System.out.print("> "+c.toDir()+" ");
             String fullCommand = scanner.nextLine();
             ParsedCommand pc = new ParsedCommand(fullCommand);
             if (pc.command == null || "".equals(pc.command)) {
@@ -55,26 +67,21 @@ public class CommandProcessor {
         } while (result);
     }
  
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 	
+		 Properties prop = System.getProperties();
+	        ProcessBuilder pb = null;
+	        if ("Linux".equals(prop.getProperty("os.name"))) {
+	            pb = new ProcessBuilder("xterm");
+	        } else {
+	            pb = new ProcessBuilder("cmd");
+	        }
+	        pb.start();
+	        
 		 CommandProcessor cp = new CommandProcessor("Cp1251");
 	     cp.execute();
 		
 	}
 
-	public void printAll(List<JavaIOFile> files)
-	{
-		System.out.println("Directory include");
-		if(files.isEmpty())
-			System.out.print(" 0 files and 0 directories.");
-		else{
-		for(JavaIOFile file:files)
-		{
-			if(file.isFile())
-				System.out.println("File"+file.getName());
-			else
-				System.out.println("Directory"+file.getName());
-		}
-		}
-	}
+	
 }

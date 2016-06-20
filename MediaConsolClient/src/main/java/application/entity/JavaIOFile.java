@@ -1,23 +1,29 @@
 package application.entity;
 
-import javax.xml.bind.annotation.XmlElement;
+
 import javax.xml.bind.annotation.XmlRootElement;
+
 
 
 @XmlRootElement
 public class JavaIOFile {
 
-
-	public JavaIOFile() {
-	}
+	public JavaIOFile(){}
 	public JavaIOFile(String name, boolean isFile) {
 		this.name = name;
 		this.isFile = isFile;
+	}
+	public JavaIOFile(String path) {
+		this.path = path;
 	}
 	 
 	private String name;
 	 
 	private boolean isFile;
+	
+	private String path;
+	
+	private Long length;
 	
 	public String getName() {
 		return name;
@@ -25,11 +31,24 @@ public class JavaIOFile {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public boolean isFile() {
+
+	public void setFile(String isFile) {
+		this.isFile =Boolean.getBoolean(isFile);
+	}
+	public boolean getIsFile() {
 		return isFile;
 	}
-	public void setFile(boolean isFile) {
-		this.isFile = isFile;
+	public String getPath() {
+		return path;
+	}
+	public void setPath(String path) {
+		this.path = path;
+	}
+	public Long getLength() {
+		return length;
+	}
+	public void setLength(String string) {
+		this.length =Long.getLong(string);
 	}
 	
 }
